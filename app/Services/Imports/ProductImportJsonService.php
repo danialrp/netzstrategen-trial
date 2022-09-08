@@ -28,10 +28,10 @@ final class ProductImportJsonService extends ProductImportService implements ToM
 
         foreach ($dataSet as $item)
             $dataCollection->push(new Product([
-                'brand' => ucfirst($item['brand']),
-                'model' => ucfirst($item['model']),
-                'sku' => strtoupper($item['sku']),
-                'price' => $this->removePriceFormat($item['price']),
+                'brand' => ucfirst($item['brand']) ?? 'N/A',
+                'model' => ucfirst($item['model']) ?? 'N/A',
+                'sku' => strtoupper($item['sku']) ?? 'N/A',
+                'price' => $this->removePriceFormat($item['price']) ?? 0,
                 'created_at' => now(),
                 'updated_at' => now()
             ]));

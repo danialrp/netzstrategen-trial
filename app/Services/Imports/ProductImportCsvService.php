@@ -28,10 +28,10 @@ final class ProductImportCsvService extends ProductImportService implements ToMo
 
         foreach ($dataSet as $item)
             $dataCollection->push(new Product([
-                'brand' => ucfirst($item['1']),
-                'model' => ucfirst($item['2']),
-                'sku' => strtoupper($item['3']),
-                'price' => $this->removePriceFormat($item['4']),
+                'brand' => ucfirst($item['1']) ?? 'N/A',
+                'model' => ucfirst($item['2']) ?? 'N/A',
+                'sku' => strtoupper($item['3']) ?? 'N/A',
+                'price' => $this->removePriceFormat($item['4']) ?? 0,
                 'created_at' => now(),
                 'updated_at' => now()
             ]));
