@@ -8,7 +8,9 @@
 namespace App\Services;
 
 use App\Jobs\ImportDataJob;
+use App\Models\Product;
 use App\Services\Imports\ProductImportService;
+use App\Traits\TruncateTrait;
 use Exception;
 use function storage_path;
 
@@ -19,6 +21,8 @@ use function storage_path;
  */
 class ProductService
 {
+    use TruncateTrait;
+
     public ProductImportService $importService;
 
     public function __construct(ProductImportService $importService)
@@ -37,6 +41,8 @@ class ProductService
 
     public function processImportData(string $source)
     {
+        $this->truncateDatabase(); // TODO only for truncating products table
+
         $importerHandler = $this->getProcessHandlerServiceBySource($source);
         $extension = strtolower($source);
         $filePath = $this->getSourceFile($extension);
@@ -54,5 +60,10 @@ class ProductService
             'xml' => "{$storageDataPath}/vehicles.xml",
             default => throw new Exception('Undefined Source Provided'),
         };
+    }
+
+    public function getAllProducts(): iterable
+    {
+        return Product::all();
     }
 }

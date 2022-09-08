@@ -21,7 +21,7 @@ use App\Traits\TruncateTrait;
  */
 class ProductImportService implements Importer
 {
-    use CleansingFilterTrait, TruncateTrait;
+    use CleansingFilterTrait;
 
     protected ImportLogService $importLogService;
     private array $importers;
@@ -29,7 +29,6 @@ class ProductImportService implements Importer
 
     public function __construct()
     {
-        $this->truncateDatabase();
         $this->importers = $this->bindImportServices();
         $this->importLogService = new ImportLogService;
     }

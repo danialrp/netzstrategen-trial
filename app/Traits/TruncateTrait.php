@@ -15,6 +15,6 @@ trait TruncateTrait
     public function truncateDatabase()
     {
         Product::truncate();
-        ImportLog::truncate();
+//        ImportLog::truncate();
     }
 }
