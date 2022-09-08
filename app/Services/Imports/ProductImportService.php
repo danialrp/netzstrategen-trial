@@ -13,6 +13,7 @@ use App\Models\Product;
 use App\Services\ImportLogService;
 use App\Traits\CleansingFilterTrait;
 use App\Traits\TruncateTrait;
+use App\Utils\ImportLogStatuses;
 
 /**
  * Class ImportService
@@ -50,16 +51,15 @@ class ProductImportService implements Importer
     public function importData(string $filePath, string $source): void
     {
         $transformedData = $this->transformData($filePath);
-
-        if (empty($transformedData)) return;
+        $logStatus = !count($transformedData) ? ImportLogStatuses::FAILED : ImportLogStatuses::COMPLETED;
 
         $importLog = $this->importLogService->createImportLogWithScaffold(['source' => $source]);
 
         foreach ($transformedData as $chunkedDataCollection) {
             Product::insert($chunkedDataCollection->toArray());
-            sleep(1);
+            sleep(1);  // TODO for postpone the operation
         }
 
-        ImportDataCompletedEvent::dispatch($importLog);
+        ImportDataCompletedEvent::dispatch($importLog, $logStatus);
     }
 }

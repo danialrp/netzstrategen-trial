@@ -41,7 +41,7 @@ class ProductService
 
     public function processImportData(string $source)
     {
-        $this->truncateDatabase(); // TODO only for truncating products table
+        $this->truncateDatabase(); // TODO for truncating products table
 
         $importerHandler = $this->getProcessHandlerServiceBySource($source);
         $extension = strtolower($source);

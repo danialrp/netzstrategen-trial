@@ -12,14 +12,16 @@ class ImportDataCompletedEvent
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public ImportLog $importLog;
+    public string $status;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(ImportLog $importLog)
+    public function __construct(ImportLog $importLog, string $status)
     {
         $this->importLog = $importLog;
+        $this->status = $status;
     }
 }

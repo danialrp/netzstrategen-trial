@@ -31,10 +31,8 @@ class UpdateImportDataListener
     public function handle(ImportDataCompletedEvent $event)
     {
         $importLog = $event->importLog;
+        $status = $event->status;
 
-        $this->importLogService->updateImportLog($importLog, [
-            'end' => now(),
-            'status' => ImportLogStatuses::COMPLETED
-        ]);
+        $this->importLogService->updateImportLog($importLog, ['end' => now(), 'status' => $status]);
     }
 }
